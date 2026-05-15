@@ -87,73 +87,86 @@ body {
 .gallery-container {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
     gap: 3rem;
     padding: 3rem;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     width: 100%;
 }
 
-/* 卡片與翻轉效果 */
+/* 卡片與版面設計 */
 .card {
-    background: transparent;
-    perspective: 1500px; /* 給予3D深度 */
-    cursor: pointer;
-    border-radius: var(--border-radius);
-    outline: none;
-}
-
-.card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-style: preserve-3d;
-    min-height: 480px;
-}
-
-.card.is-flipped .card-inner {
-    transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
     background: var(--card-bg);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    transition: all 0.3s ease;
     overflow: hidden;
+    position: relative;
+    border: 3px solid transparent;
     display: flex;
     flex-direction: column;
-    border: 3px solid transparent;
-    transition: all 0.3s ease;
 }
 
-.card:hover .card-front, 
-.card:hover .card-back {
+.card:hover {
     box-shadow: var(--shadow-hover);
     transform: translateY(-5px);
 }
 
-.card-front {
-    border-color: rgba(255, 154, 158, 0.2);
+.card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.card-back {
-    transform: rotateY(180deg);
-    border-color: rgba(161, 196, 253, 0.2);
-    background: linear-gradient(to bottom right, #ffffff, #f8fbff);
+/* 卡片頂部資訊 */
+.card-header {
+    padding: 1.5rem;
+    border-bottom: 1px dashed #eee;
+    text-align: center;
+    background: linear-gradient(to bottom, #ffffff, #fdfbfb);
+}
+
+.theme-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    margin-bottom: 0.8rem;
+}
+
+.student-info {
+    display: flex;
+    justify-content: center;
+}
+
+.student-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: inline-block;
+    padding: 6px 20px;
+    background: var(--secondary-color);
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(254, 207, 239, 0.5);
 }
 
 /* 卡片圖片 */
+.card-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: #f0f0f0;
+}
+
+.image-column {
+    position: relative;
+    background: #fff;
+}
+
 .image-wrapper {
     position: relative;
     width: 100%;
-    height: 250px;
+    height: 300px;
     overflow: hidden;
 }
 
@@ -168,105 +181,87 @@ body {
     transform: scale(1.05);
 }
 
+.upload-controls {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+body.edit-mode .upload-controls {
+    display: flex;
+}
+
+.image-upload-label {
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s;
+}
+
+.image-upload-label:hover {
+    background: rgba(0,0,0,0.9);
+}
+
+.image-upload-label.camera-btn {
+    background: rgba(255, 154, 158, 0.9);
+    color: #333;
+}
+
+.image-upload-label.camera-btn:hover {
+    background: rgba(255, 120, 130, 1);
+}
+
+.image-upload-input {
+    display: none;
+}
+
 .tag {
     position: absolute;
     top: 15px;
-    right: 15px;
     background: rgba(255, 255, 255, 0.9);
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--primary-color);
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     backdrop-filter: blur(5px);
 }
 
-.process-tag {
+.tag-process {
+    left: 15px;
     color: var(--accent-color);
 }
 
-/* 卡片內容 */
-.card-content {
+.tag-final {
+    right: 15px;
+    color: var(--primary-color);
+}
+
+/* 卡片底部內容 */
+.card-footer {
     padding: 1.5rem;
+    text-align: center;
     flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.theme-title {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--text-main);
-    margin-bottom: 0.5rem;
-}
-
-.student-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px dashed #eee;
-}
-
-.class-name {
-    background: var(--secondary-color);
-    color: #b05c8c;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-.student-name {
-    font-weight: 700;
-    color: var(--text-light);
 }
 
 .process-desc {
     font-size: 0.95rem;
     color: var(--text-light);
-    line-height: 1.6;
-    margin-top: 0.5rem;
+    line-height: 1.8;
 }
 
-/* 互動提示 */
+/* 移除不再需要的互動提示 */
 .interaction-hint {
-    background: #fdfdfd;
-    padding: 12px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: var(--primary-color);
-    font-weight: 700;
-    font-size: 0.9rem;
-    border-top: 1px solid #f0f0f0;
-    transition: background 0.3s ease;
-}
-
-.card-back .interaction-hint {
-    color: var(--accent-color);
-}
-
-.card:hover .interaction-hint {
-    background: #fff5f6;
-}
-
-.card-back:hover .interaction-hint {
-    background: #f5f9ff;
-}
-
-.flip-icon {
-    width: 18px;
-    height: 18px;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(3px); }
+    display: none;
 }
 
 /* 頁尾 */
@@ -284,7 +279,131 @@ footer {
         font-size: 2.5rem;
     }
     .gallery-container {
+        grid-template-columns: 1fr;
         padding: 1.5rem;
         gap: 2rem;
     }
+    .card-images {
+        grid-template-columns: 1fr;
+    }
+    .image-wrapper {
+        height: 250px;
+    }
+}
+
+/* 管理控制按鈕 */
+.admin-controls {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    padding: 0.6rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    background: white;
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.control-btn.editing {
+    background: var(--accent-color);
+    color: white;
+}
+
+.control-btn.danger {
+    background: #ff6b6b;
+    color: white;
+}
+
+/* 編輯模式樣式 */
+body.edit-mode [contenteditable="true"] {
+    border-bottom: 2px dashed var(--accent-color);
+    outline: none;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+body.edit-mode [contenteditable="true"]:focus {
+    background: white;
+    box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.delete-card-btn {
+    display: none;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 32px;
+    height: 32px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 20;
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+}
+
+body.edit-mode .delete-card-btn {
+    display: block;
+}
+
+.upload-controls {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+body.edit-mode .upload-controls {
+    display: flex;
+}
+
+.image-upload-label {
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.image-upload-label.camera-btn {
+    background: rgba(46, 213, 115, 0.9);
+}
+
+.image-upload-label:hover {
+    background: rgba(0,0,0,0.9);
+}
+
+.image-upload-label.camera-btn:hover {
+    background: rgba(46, 213, 115, 1);
+}
+
+.image-upload-input {
+    display: none;
 }

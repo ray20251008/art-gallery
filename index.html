@@ -5,106 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>童話奇緣 - 學生手作成果展</title>
     <meta name="description" content="展示學生的創作過程與成品，紀錄每一個純真美好的手作瞬間。">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=5">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
     <header class="hero">
         <div class="hero-content">
             <span class="badge">Art Exhibition</span>
             <h1>童話奇緣 <span>手作大賞</span></h1>
-            <p>點擊作品卡片，探索孩子們充滿想像力的創作過程與精彩成品！</p>
+            <p>作品大賞！左右比對孩子的創作過程與最終成品。</p>
+            <div class="admin-controls">
+                <button id="toggle-edit-btn" class="control-btn">進入編輯模式</button>
+                <button id="add-card-btn" class="control-btn" style="display: none;">＋ 新增作品</button>
+                <button id="export-html-btn" class="control-btn" style="background: #2ed573; color: white;">📦 匯出給家長看的版本</button>
+                <button id="backup-data-btn" class="control-btn" style="background: #3498db; color: white;">💾 下載編輯備份檔</button>
+                <label class="control-btn" style="background: #f39c12; color: white; cursor: pointer;">📂 讀取備份檔<input type="file" id="restore-data-input" accept=".json" style="display: none;"></label>
+                <span id="sync-status" style="margin-left: 10px; color: #2ed573; font-weight: bold; display: flex; align-items: center; background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px;">☁️ 連線中...</span>
+            </div>
         </div>
         <div class="hero-decoration"></div>
     </header>
 
-    <main class="gallery-container">
-        <!-- 學生作品卡片 1 -->
-        <div class="card" tabindex="0">
-            <div class="card-inner">
-                <!-- 正面：成品呈現 -->
-                <div class="card-front">
-                    <div class="image-wrapper">
-                        <img src="assets/images/snowman_final_1778802920722.png" alt="創意雪人成品" loading="lazy">
-                        <div class="tag">成品呈現</div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="theme-title">歡樂雪人家族</h2>
-                        <div class="student-info">
-                            <span class="class-name">三年7班</span>
-                            <span class="student-name">李丞祐</span>
-                        </div>
-                    </div>
-                    <div class="interaction-hint">
-                        <svg class="flip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                        <span>點擊觀看製作過程</span>
-                    </div>
-                </div>
-                <!-- 背面：製作過程 -->
-                <div class="card-back">
-                    <div class="image-wrapper">
-                        <img src="assets/images/snowman_process_1778802932934.png" alt="創意雪人製作過程" loading="lazy">
-                        <div class="tag process-tag">製作過程</div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="theme-title">歡樂雪人家族</h2>
-                        <p class="process-desc">用雙手細心揉捏輕黏土，將不同顏色的黏土混合，一步步為雪人戴上帽子和圍巾，充滿創意的過程！</p>
-                    </div>
-                    <div class="interaction-hint">
-                        <svg class="flip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
-                        <span>點擊返回成品</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 學生作品卡片 2 -->
-        <div class="card" tabindex="0">
-            <div class="card-inner">
-                <!-- 正面：成品呈現 -->
-                <div class="card-front">
-                    <div class="image-wrapper">
-                        <img src="assets/images/fish_final_1778802948923.png" alt="彩繪大魚成品" loading="lazy">
-                        <div class="tag">成品呈現</div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="theme-title">海洋之星紙盤魚</h2>
-                        <div class="student-info">
-                            <span class="class-name">三年6班</span>
-                            <span class="student-name">陳昀萱</span>
-                        </div>
-                    </div>
-                    <div class="interaction-hint">
-                        <svg class="flip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                        <span>點擊觀看製作過程</span>
-                    </div>
-                </div>
-                <!-- 背面：製作過程 -->
-                <div class="card-back">
-                    <div class="image-wrapper">
-                        <img src="assets/images/fish_process_1778802963404.png" alt="彩繪大魚製作過程" loading="lazy">
-                        <div class="tag process-tag">製作過程</div>
-                    </div>
-                    <div class="card-content">
-                        <h2 class="theme-title">海洋之星紙盤魚</h2>
-                        <p class="process-desc">利用廢棄的紙盤作為畫布，大膽運用水彩顏料與畫筆，揮灑出鮮豔的色彩，創作出獨一無二的熱帶魚。</p>
-                    </div>
-                    <div class="interaction-hint">
-                        <svg class="flip-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
-                        <span>點擊返回成品</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 可以複製更多 .card 來增加作品數量 -->
-        
+    <main class="gallery-container" id="gallery">
+        <!-- 卡片將由 JavaScript 動態生成 -->
     </main>
 
     <footer>
         <p>&copy; 2026 童話樂園 學生作品集電子刊物範本</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>
