@@ -5,19 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>童話奇緣 - 學生手作成果展</title>
     <meta name="description" content="展示學生的創作過程與成品，紀錄每一個純真美好的手作瞬間。">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=5">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
     <header class="hero">
         <div class="hero-content">
             <span class="badge">Art Exhibition</span>
             <h1>童話奇緣 <span>手作大賞</span></h1>
-            <p>點擊作品卡片，探索孩子們充滿想像力的創作過程與精彩成品！</p>
+            <p>作品大賞！左右比對孩子的創作過程與最終成品。</p>
             <div class="admin-controls">
                 <button id="toggle-edit-btn" class="control-btn">進入編輯模式</button>
                 <button id="add-card-btn" class="control-btn" style="display: none;">＋ 新增作品</button>
-                <button id="reset-data-btn" class="control-btn" style="display: none;">重設為預設範例</button>
+                <button id="export-html-btn" class="control-btn" style="background: #2ed573; color: white;">📦 匯出給家長看的版本</button>
+                <button id="backup-data-btn" class="control-btn" style="background: #3498db; color: white;">💾 下載編輯備份檔</button>
+                <label class="control-btn" style="background: #f39c12; color: white; cursor: pointer;">📂 讀取備份檔<input type="file" id="restore-data-input" accept=".json" style="display: none;"></label>
+                <span id="sync-status" style="margin-left: 10px; color: #2ed573; font-weight: bold; display: flex; align-items: center; background: rgba(255,255,255,0.8); padding: 5px 15px; border-radius: 20px;">☁️ 連線中...</span>
             </div>
         </div>
         <div class="hero-decoration"></div>
@@ -31,6 +37,6 @@
         <p>&copy; 2026 童話樂園 學生作品集電子刊物範本</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>
